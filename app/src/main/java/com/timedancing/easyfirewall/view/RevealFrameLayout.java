@@ -18,24 +18,24 @@ import com.timedancing.easyfirewall.animation.ViewAnimationUtils;
  */
 public class RevealFrameLayout extends FrameLayout implements RevealAnimator {
 
-	private final Rect mTargetBounds = new Rect();
-	private Path mRevealPath;
-	private RevealInfo mRevealInfo;
-	private boolean mRunning;
-	private float mRadius;
+    private final Rect mTargetBounds = new Rect();
+    private Path mRevealPath;
+    private RevealInfo mRevealInfo;
+    private boolean mRunning;
+    private float mRadius;
 
-	public RevealFrameLayout(Context context) {
-		this(context, null);
-	}
+    public RevealFrameLayout(Context context) {
+        this(context, null);
+    }
 
-	public RevealFrameLayout(Context context, AttributeSet attrs) {
-		this(context, attrs, 0);
-	}
+    public RevealFrameLayout(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
 
-	public RevealFrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-		super(context, attrs, defStyleAttr);
-		mRevealPath = new Path();
-	}
+    public RevealFrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        mRevealPath = new Path();
+    }
 
 //    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 //    public RevealFrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -43,65 +43,65 @@ public class RevealFrameLayout extends FrameLayout implements RevealAnimator {
 //        mRevealPath = new Path();
 //    }
 
-	@Override
-	public void onRevealAnimationStart() {
-		mRunning = true;
-	}
+    @Override
+    public void onRevealAnimationStart() {
+        mRunning = true;
+    }
 
-	@Override
-	public void onRevealAnimationEnd() {
-		mRunning = false;
-		invalidate(mTargetBounds);
-	}
+    @Override
+    public void onRevealAnimationEnd() {
+        mRunning = false;
+        invalidate(mTargetBounds);
+    }
 
-	@Override
-	public void onRevealAnimationCancel() {
-		onRevealAnimationEnd();
-	}
+    @Override
+    public void onRevealAnimationCancel() {
+        onRevealAnimationEnd();
+    }
 
-	@Override
-	public float getRevealRadius() {
-		return mRadius;
-	}
+    @Override
+    public float getRevealRadius() {
+        return mRadius;
+    }
 
-	@Override
-	public void setRevealRadius(float value) {
-		mRadius = value;
-		invalidate(mTargetBounds);
-	}
+    @Override
+    public void setRevealRadius(float value) {
+        mRadius = value;
+        invalidate(mTargetBounds);
+    }
 
-	@Override
-	public void attachRevealInfo(RevealInfo info) {
-		info.getTarget().getHitRect(mTargetBounds);
-		mRevealInfo = info;
-	}
+    @Override
+    public void attachRevealInfo(RevealInfo info) {
+        info.getTarget().getHitRect(mTargetBounds);
+        mRevealInfo = info;
+    }
 
-	@Override
-	public SupportAnimator startReverseAnimation() {
-		if (mRevealInfo != null && mRevealInfo.hasTarget() && !mRunning) {
-			return ViewAnimationUtils.createCircularReveal(mRevealInfo.getTarget(),
-					mRevealInfo.centerX, mRevealInfo.centerY,
-					mRevealInfo.endRadius, mRevealInfo.startRadius);
-		}
-		return null;
-	}
+    @Override
+    public SupportAnimator startReverseAnimation() {
+        if (mRevealInfo != null && mRevealInfo.hasTarget() && !mRunning) {
+            return ViewAnimationUtils.createCircularReveal(mRevealInfo.getTarget(),
+                    mRevealInfo.centerX, mRevealInfo.centerY,
+                    mRevealInfo.endRadius, mRevealInfo.startRadius);
+        }
+        return null;
+    }
 
-	@Override
-	protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
-		if (mRunning && child == mRevealInfo.getTarget()) {
-			final int state = canvas.save();
+    @Override
+    protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
+        if (mRunning && child == mRevealInfo.getTarget()) {
+            final int state = canvas.save();
 
-			mRevealPath.reset();
-			mRevealPath.addCircle(mRevealInfo.centerX, mRevealInfo.centerY, mRadius, Path.Direction.CW);
+            mRevealPath.reset();
+            mRevealPath.addCircle(mRevealInfo.centerX, mRevealInfo.centerY, mRadius, Path.Direction.CW);
 
-			canvas.clipPath(mRevealPath);
+            canvas.clipPath(mRevealPath);
 
-			boolean isInvalided = super.drawChild(canvas, child, drawingTime);
+            boolean isInvalided = super.drawChild(canvas, child, drawingTime);
 
-			canvas.restoreToCount(state);
+            canvas.restoreToCount(state);
 
-			return isInvalided;
-		}
-		return super.drawChild(canvas, child, drawingTime);
-	}
+            return isInvalided;
+        }
+        return super.drawChild(canvas, child, drawingTime);
+    }
 }

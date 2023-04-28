@@ -16,82 +16,82 @@ import java.util.List;
  */
 public class DomainDao {
 
-	private static DomainDao sIntance;
-	private Context mContext;
+    private static DomainDao sIntance;
+    private Context mContext;
 
 
-	public DomainDao(Context context) {
-		if (context instanceof Application) {
-			mContext = context;
-		} else {
-			mContext = context.getApplicationContext();
-		}
-	}
+    public DomainDao(Context context) {
+        if (context instanceof Application) {
+            mContext = context;
+        } else {
+            mContext = context.getApplicationContext();
+        }
+    }
 
-	public static DomainDao get(Context context) {
-		if (sIntance == null) {
-			sIntance = new DomainDao(context);
-		}
+    public static DomainDao get(Context context) {
+        if (sIntance == null) {
+            sIntance = new DomainDao(context);
+        }
 
-		return sIntance;
-	}
+        return sIntance;
+    }
 
-	public void add(Domain domain) {
-		try {
-			DatabaseHelper helper = DatabaseHelper.getHelper(mContext);
-			List<Domain> domains = helper.getDomains().queryBuilder().where().eq("domain", domain.getDomain()).query();
-			if (domains == null || domains.size() == 0) {
-				helper.getDomains().create(domain);
-			}
-		} catch (SQLException ex) {
-			if (AppDebug.IS_DEBUG) {
-				ex.printStackTrace(System.err);
-			}
-		}
-	}
+    public void add(Domain domain) {
+        try {
+            DatabaseHelper helper = DatabaseHelper.getHelper(mContext);
+            List<Domain> domains = helper.getDomains().queryBuilder().where().eq("domain", domain.getDomain()).query();
+            if (domains == null || domains.size() == 0) {
+                helper.getDomains().create(domain);
+            }
+        } catch (SQLException ex) {
+            if (AppDebug.IS_DEBUG) {
+                ex.printStackTrace(System.err);
+            }
+        }
+    }
 
-	public void update(Domain domain) {
-		try {
-			DatabaseHelper helper = DatabaseHelper.getHelper(mContext);
-			Dao<Domain, Integer> dao = helper.getDomains();
-			dao.update(domain);
-		} catch (SQLException ex) {
-			if (AppDebug.IS_DEBUG) {
-				ex.printStackTrace(System.err);
-			}
-		}
-	}
+    public void update(Domain domain) {
+        try {
+            DatabaseHelper helper = DatabaseHelper.getHelper(mContext);
+            Dao<Domain, Integer> dao = helper.getDomains();
+            dao.update(domain);
+        } catch (SQLException ex) {
+            if (AppDebug.IS_DEBUG) {
+                ex.printStackTrace(System.err);
+            }
+        }
+    }
 
-	public Domain getDomainByString(String str) {
-		Domain result = null;
+    public Domain getDomainByString(String str) {
+        Domain result = null;
 
-		try {
-			DatabaseHelper helper = DatabaseHelper.getHelper(mContext);
-			Dao<Domain, Integer> domains = helper.getDomains();
-			result = domains.queryBuilder().where().eq("domain", str).queryForFirst();
-		} catch (SQLException ex) {
-			if (AppDebug.IS_DEBUG) {
-				ex.printStackTrace(System.err);
-			}
-		}
+        try {
+            DatabaseHelper helper = DatabaseHelper.getHelper(mContext);
+            Dao<Domain, Integer> domains = helper.getDomains();
+            result = domains.queryBuilder().where().eq("domain", str).queryForFirst();
+        } catch (SQLException ex) {
+            if (AppDebug.IS_DEBUG) {
+                ex.printStackTrace(System.err);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 
-	public boolean hasData() {
-		boolean result = false;
+    public boolean hasData() {
+        boolean result = false;
 
-		try {
-			DatabaseHelper helper = DatabaseHelper.getHelper(mContext);
-			result = helper.getDomains().queryBuilder().queryForFirst() != null;
-		} catch (SQLException ex) {
-			if (AppDebug.IS_DEBUG) {
-				ex.printStackTrace(System.err);
-			}
-		}
+        try {
+            DatabaseHelper helper = DatabaseHelper.getHelper(mContext);
+            result = helper.getDomains().queryBuilder().queryForFirst() != null;
+        } catch (SQLException ex) {
+            if (AppDebug.IS_DEBUG) {
+                ex.printStackTrace(System.err);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

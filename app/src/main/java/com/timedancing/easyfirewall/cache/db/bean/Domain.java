@@ -9,32 +9,32 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 @DatabaseTable(tableName = "tb_domain")
 public class Domain {
-	@DatabaseField(generatedId = true, columnName = "id")
-	private int id;
+    @DatabaseField(generatedId = true, columnName = "id")
+    private int id;
 
-	@DatabaseField(columnName = "domain")
-	private String mDomain;
+    @DatabaseField(columnName = "domain")
+    private String mDomain;
 
-	@DatabaseField(columnName = "ip")
-	private int mIp;
+    @DatabaseField(columnName = "ip")
+    private int mIp;
 
-	public Domain() {
-	}
+    public Domain() {
+    }
 
-	public Domain(String domain, int ip) {
-		mDomain = domain;
-		mIp = ip;
-	}
+    public Domain(String domain, int ip) {
+        mDomain = domain;
+        mIp = ip;
+    }
 
-	public String getDomain() {
-		return mDomain;
-	}
+    public String getDomain() {
+        return mDomain;
+    }
 
-	public int getIp() {
-		return mIp;
-	}
+    public int getIp() {
+        return mIp;
+    }
 
-	public void setIp(int ip) {
-		mIp = ip;
-	}
+    public void setIp(int ip) {
+        mIp = ip;
+    }
 }

@@ -11,8 +11,8 @@ import com.timedancing.easyfirewall.R;
  */
 public class PreventUninstallDeviceAdminReceiver extends DeviceAdminReceiver {
 
-	@Override
-	public CharSequence onDisableRequested(Context context, Intent intent) {
-		return context.getString(R.string.warning_when_disable_admin_manager);
-	}
+    @Override
+    public CharSequence onDisableRequested(Context context, Intent intent) {
+        return context.getString(R.string.warning_when_disable_admin_manager);
+    }
 }

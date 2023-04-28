@@ -5,18 +5,18 @@ package com.timedancing.easyfirewall.event;
  */
 public class HostUpdateEvent {
 
-	private Status mStatus;
+    private Status mStatus;
 
-	public HostUpdateEvent(Status status) {
-		mStatus = status;
-	}
+    public HostUpdateEvent(Status status) {
+        mStatus = status;
+    }
 
-	public Status getStatus() {
-		return mStatus;
-	}
+    public Status getStatus() {
+        return mStatus;
+    }
 
-	public enum Status {
-		Updating,
-		UpdateFinished,
-	}
+    public enum Status {
+        Updating,
+        UpdateFinished,
+    }
 }

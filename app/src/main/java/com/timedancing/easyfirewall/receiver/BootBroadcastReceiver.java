@@ -13,11 +13,11 @@ import com.timedancing.easyfirewall.util.DebugLog;
  */
 public class BootBroadcastReceiver extends BroadcastReceiver {
 
-	@Override
-	public void onReceive(Context context, Intent intent) {
-		if (AppConfig.isShouldAutoRunWhenBootCompleted(context)) {
-			DebugLog.d("Auto run when boot completed!");
-			VpnServiceHelper.changeVpnRunningStatus(context, true);
-		}
-	}
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (AppConfig.isShouldAutoRunWhenBootCompleted(context)) {
+            DebugLog.d("Auto run when boot completed!");
+            VpnServiceHelper.changeVpnRunningStatus(context, true);
+        }
+    }
 }

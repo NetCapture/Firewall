@@ -15,67 +15,67 @@ import java.util.List;
  */
 public class IPDao {
 
-	private static IPDao sInstance;
-	private Context mContext;
+    private static IPDao sInstance;
+    private Context mContext;
 
-	private IPDao(Context context) {
-		if (context instanceof Application) {
-			mContext = context;
-		} else {
-			mContext = context.getApplicationContext();
-		}
-	}
+    private IPDao(Context context) {
+        if (context instanceof Application) {
+            mContext = context;
+        } else {
+            mContext = context.getApplicationContext();
+        }
+    }
 
-	public static IPDao get(Context context) {
-		if (sInstance == null) {
-			sInstance = new IPDao(context);
-		}
-		return sInstance;
-	}
+    public static IPDao get(Context context) {
+        if (sInstance == null) {
+            sInstance = new IPDao(context);
+        }
+        return sInstance;
+    }
 
-	public void add(IP ip) {
-		try {
-			DatabaseHelper helper = DatabaseHelper.getHelper(mContext);
-			List<IP> ips = helper.getIPs().queryBuilder().where().eq("ip", ip.getIp()).query();
-			if (ips == null || ips.size() == 0) {
-				helper.getIPs().create(ip);
-			}
-		} catch (SQLException ex) {
-			if (AppDebug.IS_DEBUG) {
-				ex.printStackTrace(System.err);
-			}
-		}
-	}
-
-
-	public IP getIP(int ip) {
-		IP result = null;
-
-		try {
-			DatabaseHelper helper = DatabaseHelper.getHelper(mContext);
-			result = helper.getIPs().queryBuilder().where().eq("ip", ip).queryForFirst();
-		} catch (SQLException ex) {
-			if (AppDebug.IS_DEBUG) {
-				ex.printStackTrace(System.err);
-			}
-		}
-
-		return result;
-	}
+    public void add(IP ip) {
+        try {
+            DatabaseHelper helper = DatabaseHelper.getHelper(mContext);
+            List<IP> ips = helper.getIPs().queryBuilder().where().eq("ip", ip.getIp()).query();
+            if (ips == null || ips.size() == 0) {
+                helper.getIPs().create(ip);
+            }
+        } catch (SQLException ex) {
+            if (AppDebug.IS_DEBUG) {
+                ex.printStackTrace(System.err);
+            }
+        }
+    }
 
 
-	public boolean hasData() {
-		boolean result = false;
+    public IP getIP(int ip) {
+        IP result = null;
 
-		try {
-			DatabaseHelper helper = DatabaseHelper.getHelper(mContext);
-			result = helper.getIPs().queryBuilder().queryForFirst() != null;
-		} catch (SQLException ex) {
-			if (AppDebug.IS_DEBUG) {
-				ex.printStackTrace(System.err);
-			}
-		}
+        try {
+            DatabaseHelper helper = DatabaseHelper.getHelper(mContext);
+            result = helper.getIPs().queryBuilder().where().eq("ip", ip).queryForFirst();
+        } catch (SQLException ex) {
+            if (AppDebug.IS_DEBUG) {
+                ex.printStackTrace(System.err);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
+
+
+    public boolean hasData() {
+        boolean result = false;
+
+        try {
+            DatabaseHelper helper = DatabaseHelper.getHelper(mContext);
+            result = helper.getIPs().queryBuilder().queryForFirst() != null;
+        } catch (SQLException ex) {
+            if (AppDebug.IS_DEBUG) {
+                ex.printStackTrace(System.err);
+            }
+        }
+
+        return result;
+    }
 }

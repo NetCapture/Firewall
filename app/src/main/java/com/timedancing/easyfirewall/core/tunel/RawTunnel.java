@@ -11,36 +11,36 @@ import java.nio.channels.SocketChannel;
  */
 public class RawTunnel extends Tunnel {
 
-	public RawTunnel(SocketChannel innerChannel, Selector selector) {
-		super(innerChannel, selector);
-	}
+    public RawTunnel(SocketChannel innerChannel, Selector selector) {
+        super(innerChannel, selector);
+    }
 
-	public RawTunnel(InetSocketAddress serverAddress, Selector selector) throws IOException {
-		super(serverAddress, selector);
-	}
+    public RawTunnel(InetSocketAddress serverAddress, Selector selector) throws IOException {
+        super(serverAddress, selector);
+    }
 
-	@Override
-	protected void onConnected(ByteBuffer buffer) throws Exception {
-		onTunnelEstablished();
-	}
+    @Override
+    protected void onConnected(ByteBuffer buffer) throws Exception {
+        onTunnelEstablished();
+    }
 
-	@Override
-	protected boolean isTunnelEstablished() {
-		return true;
-	}
+    @Override
+    protected boolean isTunnelEstablished() {
+        return true;
+    }
 
-	@Override
-	protected void beforeSend(ByteBuffer buffer) throws Exception {
+    @Override
+    protected void beforeSend(ByteBuffer buffer) throws Exception {
 
-	}
+    }
 
-	@Override
-	protected void afterReceived(ByteBuffer buffer) throws Exception {
+    @Override
+    protected void afterReceived(ByteBuffer buffer) throws Exception {
 
-	}
+    }
 
-	@Override
-	protected void onDispose() {
+    @Override
+    protected void onDispose() {
 
-	}
+    }
 }

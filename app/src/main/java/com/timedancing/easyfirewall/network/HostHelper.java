@@ -27,111 +27,111 @@ import de.greenrobot.event.EventBus;
  */
 public class HostHelper {
 
-	private static final String HOST_URL = "http://dn-mwsl-hosts.qbox.me/hosts.txt";
+    private static final String HOST_URL = "http://dn-mwsl-hosts.qbox.me/hosts.txt";
 
-	public static void updateHost(final Context context) {
-
-
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				InputStream inputStream = null;
-				BufferedReader reader = null;
+    public static void updateHost(final Context context) {
 
 
-				try {
-					EventBus.getDefault().post(new HostUpdateEvent(HostUpdateEvent.Status.Updating));
-					URL url = new URL(HOST_URL);
-					URLConnection connection = url.openConnection();
-					HttpURLConnection httpURLConnection = (HttpURLConnection) connection;
-
-					httpURLConnection.setDoInput(true);
-					httpURLConnection.setRequestProperty(AppCache.KEY_IF_SINCE_MODIFIED_SINCE, AppCache
-							.getIfSinceModifiedSince(context));
-					httpURLConnection.setConnectTimeout(10 * 1000); //10s超时
-					httpURLConnection.connect();
-
-					int state = httpURLConnection.getResponseCode();
-					if (state == 200) {
-						String lastModified = httpURLConnection.getHeaderField("Last-Modified");
-						if (!TextUtils.isEmpty(lastModified)) {
-							AppCache.setIfSinceModifiedSince(context, lastModified);
-						}
-						inputStream = httpURLConnection.getInputStream();
-						StringBuilder sb = new StringBuilder("");
-
-						reader = new BufferedReader(new InputStreamReader(inputStream));
-						String line = null;
-						while ((line = reader.readLine()) != null) {
-							sb.append(line);
-							sb.append("\r\n");
-						}
-
-						if (!TextUtils.isEmpty(sb.toString())) {
-							writeHostFile(context, sb.toString());
-						}
-
-					}
-
-				} catch (Exception ex) {
-
-					if (AppDebug.IS_DEBUG) {
-						ex.printStackTrace(System.err);
-					}
-
-				} finally {
-					EventBus.getDefault().post(new HostUpdateEvent(HostUpdateEvent.Status.UpdateFinished));
-					try {
-						if (reader != null) {
-							reader.close();
-						}
-						if (inputStream != null) {
-							inputStream.close();
-						}
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                InputStream inputStream = null;
+                BufferedReader reader = null;
 
 
-	}
+                try {
+                    EventBus.getDefault().post(new HostUpdateEvent(HostUpdateEvent.Status.Updating));
+                    URL url = new URL(HOST_URL);
+                    URLConnection connection = url.openConnection();
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) connection;
 
-	private static void writeHostFile(Context context, String content) {
-		File file = null;
-		OutputStream outputStream = null;
-		BufferedWriter writer = null;
-		try {
-			file = new File(context.getExternalCacheDir(), "host.txt");
-			if (file.exists()) {
-				file.delete();
-			}
+                    httpURLConnection.setDoInput(true);
+                    httpURLConnection.setRequestProperty(AppCache.KEY_IF_SINCE_MODIFIED_SINCE, AppCache
+                            .getIfSinceModifiedSince(context));
+                    httpURLConnection.setConnectTimeout(10 * 1000); //10s超时
+                    httpURLConnection.connect();
 
-			outputStream = new FileOutputStream(file);
+                    int state = httpURLConnection.getResponseCode();
+                    if (state == 200) {
+                        String lastModified = httpURLConnection.getHeaderField("Last-Modified");
+                        if (!TextUtils.isEmpty(lastModified)) {
+                            AppCache.setIfSinceModifiedSince(context, lastModified);
+                        }
+                        inputStream = httpURLConnection.getInputStream();
+                        StringBuilder sb = new StringBuilder("");
 
-			writer = new BufferedWriter(new OutputStreamWriter(outputStream));
+                        reader = new BufferedReader(new InputStreamReader(inputStream));
+                        String line = null;
+                        while ((line = reader.readLine()) != null) {
+                            sb.append(line);
+                            sb.append("\r\n");
+                        }
 
-			writer.write(content, 0, content.length());
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (writer != null) {
-					writer.close();
-				}
+                        if (!TextUtils.isEmpty(sb.toString())) {
+                            writeHostFile(context, sb.toString());
+                        }
 
-				if (outputStream != null) {
-					outputStream.close();
-				}
+                    }
 
-			} catch (IOException e) {
-				e.printStackTrace(System.err);
-			}
+                } catch (Exception ex) {
 
-		}
+                    if (AppDebug.IS_DEBUG) {
+                        ex.printStackTrace(System.err);
+                    }
+
+                } finally {
+                    EventBus.getDefault().post(new HostUpdateEvent(HostUpdateEvent.Status.UpdateFinished));
+                    try {
+                        if (reader != null) {
+                            reader.close();
+                        }
+                        if (inputStream != null) {
+                            inputStream.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
 
 
-	}
+    }
+
+    private static void writeHostFile(Context context, String content) {
+        File file = null;
+        OutputStream outputStream = null;
+        BufferedWriter writer = null;
+        try {
+            file = new File(context.getExternalCacheDir(), "host.txt");
+            if (file.exists()) {
+                file.delete();
+            }
+
+            outputStream = new FileOutputStream(file);
+
+            writer = new BufferedWriter(new OutputStreamWriter(outputStream));
+
+            writer.write(content, 0, content.length());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace(System.err);
+            }
+
+        }
+
+
+    }
 
 }

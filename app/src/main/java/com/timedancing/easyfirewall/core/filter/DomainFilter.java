@@ -6,8 +6,8 @@ package com.timedancing.easyfirewall.core.filter;
  */
 public interface DomainFilter {
 
-	void prepare();
+    void prepare();
 
-	boolean needFilter(String domain, int ip);
+    boolean needFilter(String domain, int ip);
 
 }

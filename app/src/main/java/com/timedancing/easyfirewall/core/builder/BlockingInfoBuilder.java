@@ -7,6 +7,6 @@ import java.nio.ByteBuffer;
  */
 public interface BlockingInfoBuilder {
 
-	ByteBuffer getBlockingInformation();
+    ByteBuffer getBlockingInformation();
 
 }

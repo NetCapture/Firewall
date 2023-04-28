@@ -13,17 +13,17 @@ import java.nio.channels.SocketChannel;
  */
 public class TunnelFactory {
 
-	public static Tunnel wrap(SocketChannel channel, Selector selector) {
-		Tunnel tunnel = new RawTunnel(channel, selector);
-		NatSession session = NatSessionManager.getSession((short) channel.socket().getPort());
-		if (session != null) {
-			tunnel.setIsHttpsRequest(session.IsHttpsSession);
-		}
-		return tunnel;
-	}
+    public static Tunnel wrap(SocketChannel channel, Selector selector) {
+        Tunnel tunnel = new RawTunnel(channel, selector);
+        NatSession session = NatSessionManager.getSession((short) channel.socket().getPort());
+        if (session != null) {
+            tunnel.setIsHttpsRequest(session.IsHttpsSession);
+        }
+        return tunnel;
+    }
 
-	public static Tunnel createTunnelByConfig(InetSocketAddress destAddress, Selector selector) throws IOException {
-		//TODO 这里只是简单创建一个RawTunnel，日后可以根据代理类型创建不同的Tunnel
-		return new RemoteTunnel(destAddress, selector);
-	}
+    public static Tunnel createTunnelByConfig(InetSocketAddress destAddress, Selector selector) throws IOException {
+        //TODO 这里只是简单创建一个RawTunnel，日后可以根据代理类型创建不同的Tunnel
+        return new RemoteTunnel(destAddress, selector);
+    }
 }
