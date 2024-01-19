@@ -26,6 +26,7 @@
 
     </com.timedancing.easyfirewall.view.RevealFrameLayout>
 
+    <!-- setting-->
     <ImageButton
         android:id="@+id/img_setting"
         android:layout_width="25dp"

@@ -20,7 +20,6 @@ import java.util.ArrayList;
 /**
  * Created by fyu on 11/3/14.
  */
-
 public class RippleBackground extends RelativeLayout {
 
     private static final int DEFAULT_RIPPLE_COUNT = 6;

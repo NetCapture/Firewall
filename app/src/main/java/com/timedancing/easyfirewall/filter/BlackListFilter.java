@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import android.util.SparseIntArray;
 
 import com.timedancing.easyfirewall.R;
-import com.timedancing.easyfirewall.app.GlobalApplication;
+import com.timedancing.easyfirewall.GlobalApplication;
 import com.timedancing.easyfirewall.constant.AppDebug;
 import com.timedancing.easyfirewall.core.ProxyConfig;
 import com.timedancing.easyfirewall.core.filter.DomainFilter;

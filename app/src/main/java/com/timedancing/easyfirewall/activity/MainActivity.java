@@ -40,29 +40,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            // clear FLAG_TRANSLUCENT_STATUS flag:
-//            Window window = getWindow();
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//
-//            window.setStatusBarColor(Color.parseColor("#00000000"));
-//
-//            window.getDecorView()
-//                    .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-//        }
         //全屏展示，底部方向导航在
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-
-        // // 理论上是下部导航栏。缺陷: 底部成黑框了
-//        View decorView = getWindow().getDecorView();
-//        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                | View.SYSTEM_UI_FLAG_FULLSCREEN;
-//        decorView.setSystemUiVisibility(uiOptions);
 
         setContentView(R.layout.activity_main);
 
@@ -78,19 +59,23 @@ public class MainActivity extends AppCompatActivity {
         mTvRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (AppConfig.isNeedShowTips(MainActivity.this)) {
+                boolean isNeedShowTips=AppConfig.isNeedShowTips(MainActivity.this);
+                DebugLog.d("isNeedShowTips: "+isNeedShowTips);
+                if (isNeedShowTips) {
                     AppConfig.setIsNeedShowTips(MainActivity.this, false);
                     mMaskView.setVisibility(View.GONE);
                     mTipsView.setVisibility(View.GONE);
                 }
 
-
                 boolean nextStatus = !mTvRun.isSelected();
+                DebugLog.d("nextStatus: "+nextStatus);
                 if (!nextStatus) { //如果是关闭操作，立即更新界面
                     changeButtonStatus(false);
                 }
                 startAnimation(nextStatus);
-                if (VpnServiceHelper.vpnRunningStatus() != nextStatus) {
+                boolean vpnRunningStatus= VpnServiceHelper.vpnRunningStatus();
+                DebugLog.d("vpnRunningStatus: "+vpnRunningStatus);
+                if ( vpnRunningStatus!= nextStatus) {
                     VpnServiceHelper.changeVpnRunningStatus(MainActivity.this, nextStatus);
                 }
 
@@ -116,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
         mUpdateProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mUpdateProgressDialog.setMessage(getString(R.string.updating_config));
 
-//        AppCache.syncBlockCountWithLeanCloud(this);
 
         if (!VpnServiceHelper.vpnRunningStatus()) {
             HostHelper.updateHost(this);

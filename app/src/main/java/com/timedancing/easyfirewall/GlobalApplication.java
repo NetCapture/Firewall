@@ -1,4 +1,4 @@
-package com.timedancing.easyfirewall.app;
+package com.timedancing.easyfirewall;
 
 import android.app.Application;
 

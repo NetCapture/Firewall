@@ -28,9 +28,7 @@ import de.greenrobot.event.EventBus;
 public class HostHelper {
 
     private static final String HOST_URL = "http://dn-mwsl-hosts.qbox.me/hosts.txt";
-
     public static void updateHost(final Context context) {
-
 
         new Thread(new Runnable() {
             @Override

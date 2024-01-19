@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.timedancing.easyfirewall.R;
-import com.timedancing.easyfirewall.app.GlobalApplication;
+import com.timedancing.easyfirewall.GlobalApplication;
 import com.timedancing.easyfirewall.cache.AppCache;
 import com.timedancing.easyfirewall.core.builder.BlockingInfoBuilder;
 import com.timedancing.easyfirewall.core.builder.DefaultBlockingInfoBuilder;

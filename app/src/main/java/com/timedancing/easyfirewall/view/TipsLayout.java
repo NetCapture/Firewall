@@ -19,7 +19,6 @@ public class TipsLayout extends RelativeLayout {
 
     private final int BORDER_STYLE_NONE = 0;
     private final int BORDER_STYLE_DASH = 1;
-
     private Paint mPaint;
     private Path mPath;
     private int mBorderColor;

@@ -1,5 +1,6 @@
 package com.timedancing.easyfirewall.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 /**
  * Created by zengzheying on 16/1/22.
  */
+@SuppressLint("AppCompatCustomView")
 public class GuideImageView extends ImageView {
 
     public GuideImageView(Context context) {
